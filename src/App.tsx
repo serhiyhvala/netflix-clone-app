@@ -1,7 +1,11 @@
-import './App.css'
+import HomeScreen from './components/HomeScreen'
 
 const App = () => {
-	return <div>App</div>
+	return (
+		<div className='app'>
+			<HomeScreen />
+		</div>
+	)
 }
 
 export default App
