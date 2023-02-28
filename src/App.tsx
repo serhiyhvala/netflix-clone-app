@@ -1,3 +1,4 @@
+import './App.css'
 import HomeScreen from './components/HomeScreen'
 
 const App = () => {
