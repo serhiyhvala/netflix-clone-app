@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { pointForImage } from '../../constants'
 import { IMovie } from '../../services/getAllMovies.types'
 import { useGetNetflixOriginalsQuery } from '../../services/moviesApi'
 
@@ -16,8 +17,6 @@ const Banner = () => {
 
 	const randomNumber =
 		data && Math.floor(Math.random() * data?.results.length - 1)
-
-	const pointForImage = 'https://image.tmdb.org/t/p/original'
 
 	useEffect(() => {
 		randomNumber && setMovies(data?.results[randomNumber])
