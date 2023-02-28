@@ -25,8 +25,6 @@ export const moviesApi = createApi({
 	})
 })
 
-//https://api.themoviedb.org/3/discover/tv?api_key=e41fa617fb0639f5b0d599edd3caa30f&with_networks=213
-
 export const {
 	useGetAllMoviesQuery,
 	useGetNetflixOriginalsQuery,
