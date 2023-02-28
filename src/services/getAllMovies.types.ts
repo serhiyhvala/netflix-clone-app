@@ -1,11 +1,11 @@
 export interface IGetAllMovies {
 	page: number
-	results: Result[]
+	results: IMovie[]
 	total_pages: number
 	total_results: number
 }
 
-interface Result {
+export interface IMovie {
 	adult: boolean
 	backdrop_path: string
 	id: number
