@@ -5,7 +5,7 @@ export interface IGetAllMovies {
 	total_results: number
 }
 
-export interface Result {
+interface Result {
 	adult: boolean
 	backdrop_path: string
 	id: number
