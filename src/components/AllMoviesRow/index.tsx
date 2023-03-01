@@ -4,7 +4,7 @@ import { IAllMoviesRow } from '../../app.types'
 import { pointForImage } from '../../constants'
 import { IMovie } from '../../services/getAllMovies.types'
 import { useGetAllMoviesQuery } from '../../services/moviesApi'
-import '../Row/Row.scss'
+import styles from '../Row/row.module.scss'
 
 const AllMoviesRow: FC<IAllMoviesRow> = ({ title }) => {
 	const { data: allMovies } = useGetAllMoviesQuery('trending')
@@ -13,14 +13,14 @@ const AllMoviesRow: FC<IAllMoviesRow> = ({ title }) => {
 		setAllMoviesRow(allMovies?.results)
 	}, [allMovies])
 	return (
-		<div className='row'>
+		<div className={styles.row}>
 			<h2>{title}</h2>
-			<div className='row__posters'>
+			<div className={styles.posters}>
 				{allMoviesRow?.map(
 					item =>
 						item.backdrop_path && (
 							<img
-								className={`row__poster`}
+								className={styles.poster}
 								key={item.id}
 								src={`${pointForImage}/${item.backdrop_path}`}
 								alt={item.name}

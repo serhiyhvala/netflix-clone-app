@@ -4,7 +4,7 @@ import { ITopRatedRow } from '../../app.types'
 import { pointForImage } from '../../constants'
 import { IMovie } from '../../services/getAllMovies.types'
 import { useGetTopRatedQuery } from '../../services/moviesApi'
-import '../Row/Row.scss'
+import styles from '../Row/row.module.scss'
 
 const TopRatedRow: FC<ITopRatedRow> = ({ title }) => {
 	const { data: topRated } = useGetTopRatedQuery('top_rated')
@@ -13,14 +13,14 @@ const TopRatedRow: FC<ITopRatedRow> = ({ title }) => {
 		setTopRatedRow(topRated?.results)
 	}, [topRated])
 	return (
-		<div className='row'>
+		<div className={styles.row}>
 			<h2>{title}</h2>
-			<div className='row__posters'>
+			<div className={styles.posters}>
 				{topRatedRow?.map(
 					item =>
 						item.backdrop_path && (
 							<img
-								className={`row__poster`}
+								className={styles.poster}
 								key={item.id}
 								src={`${pointForImage}/${item.backdrop_path}`}
 								alt={item.name}

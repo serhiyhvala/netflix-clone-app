@@ -5,7 +5,7 @@ import { pointForImage } from '../../constants'
 import { IMovie } from '../../services/getAllMovies.types'
 import { useGetMoviesByGenreQuery } from '../../services/moviesApi'
 
-import './Row.scss'
+import styles from './row.module.scss'
 
 const Row: FC<IRowProps> = ({ title, fetchData }) => {
 	const { data } = useGetMoviesByGenreQuery(fetchData)
@@ -14,14 +14,14 @@ const Row: FC<IRowProps> = ({ title, fetchData }) => {
 		setMovies(data?.results)
 	}, [fetchData, data])
 	return (
-		<div className='row'>
+		<div className={styles.row}>
 			<h2>{title}</h2>
-			<div className='row__posters'>
+			<div className={styles.posters}>
 				{movies?.map(
 					item =>
 						item.backdrop_path && (
 							<img
-								className='row__poster'
+								className={styles.poster}
 								key={item.id}
 								src={`${pointForImage}/${item.backdrop_path}`}
 								alt={item.name}
