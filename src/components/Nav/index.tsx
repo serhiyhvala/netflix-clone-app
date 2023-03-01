@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import NetflixLogo from '../../assets/NetflixLogo.png'
 import NetflixUserLogo from '../../assets/NetflixUserLogo.png'
 
-import './Nav.scss'
+import styles from './nav.module.scss'
 
 const Nav = () => {
 	const [show, handleShow] = useState(false)
@@ -14,16 +14,17 @@ const Nav = () => {
 			handleShow(false)
 		}
 	}
+	const isShowNavBlack = show && styles.black
 	useEffect(() => {
 		window.addEventListener('scroll', transitionNavBar)
 		return () => window.removeEventListener('scroll', transitionNavBar)
 	}, [])
 	return (
-		<div className={`nav ${show && 'nav__black'}`}>
-			<div className='nav__contents'>
-				<img className='nav__logo' src={NetflixLogo} alt='Netflix Logo' />
+		<div className={`${styles.nav} ${isShowNavBlack}`}>
+			<div className={styles.content}>
+				<img className={styles.logo} src={NetflixLogo} alt='Netflix Logo' />
 				<img
-					className='nav__avatar'
+					className={styles.avatar}
 					src={NetflixUserLogo}
 					alt='Netflix User Logo'
 				/>
