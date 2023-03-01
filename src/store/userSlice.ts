@@ -1,5 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
+import { errorCode } from '../constants'
+
 export type isLoginUserData = {
 	email: string | null
 	uid: string | null
@@ -9,12 +11,14 @@ export type InitialStateType = {
 	isLogin: boolean
 	isLoginUserData: isLoginUserData
 	userEmail: string
+	errorAuth: string | null
 }
 
 const initialState: InitialStateType = {
 	isLogin: false,
 	isLoginUserData: { email: '', uid: '' },
-	userEmail: ''
+	userEmail: '',
+	errorAuth: null
 }
 
 export const userSlice = createSlice({
@@ -37,9 +41,20 @@ export const userSlice = createSlice({
 		},
 		setUserEmail: (state: InitialStateType, action: PayloadAction<string>) => {
 			state.userEmail = action.payload
+		},
+		setError: (
+			state: InitialStateType,
+			action: PayloadAction<string | null>
+		) => {
+			state.errorAuth =
+				action.payload && errorCode.hasOwnProperty(action.payload)
+					? // 	@ts-ignore
+					  errorCode[action.payload]
+					: null
 		}
 	}
 })
 
-export const { loginUser, logoutUser, setUserEmail } = userSlice.actions
+export const { loginUser, logoutUser, setUserEmail, setError } =
+	userSlice.actions
 export default userSlice.reducer

@@ -2,12 +2,12 @@ import React, { FormEvent, useState } from 'react'
 
 import { createUser, signInUser } from '../../firebase/signUpForm'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { setUserEmail } from '../../store/userSlice'
+import { setError, setUserEmail } from '../../store/userSlice'
 
 import styles from './sign_up_screen.module.scss'
 
 const SignUpScreen = () => {
-	const userEmail = useAppSelector(state => state.user.userEmail)
+	const { userEmail, errorAuth } = useAppSelector(state => state.user)
 	const dispatch = useAppDispatch()
 	const [inputValue, setInputValue] = useState({
 		email: userEmail,
@@ -19,20 +19,28 @@ const SignUpScreen = () => {
 
 	const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputValue({ ...inputValue, [e.target.type]: e.target.value })
+		dispatch(setError(null))
 	}
 
-	const isEmailAndPasswordExist = email !== null && password !== null
+	const isEmailAndPasswordExist = email && password
+	const isUserError = errorAuth ? styles.errorInput : ''
 
 	const signUp = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		isEmailAndPasswordExist && (await createUser(email, password))
+		isEmailAndPasswordExist &&
+			(await createUser(email, password).catch(error =>
+				dispatch(setError(error.code))
+			))
 		dispatch(setUserEmail(''))
 		setInputValue({ ...inputValue, password: '' })
 	}
 
 	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
-		isEmailAndPasswordExist && (await signInUser(email, password))
+		isEmailAndPasswordExist &&
+			(await signInUser(email, password).catch(error =>
+				dispatch(setError(error.code))
+			))
 		dispatch(setUserEmail(''))
 		setInputValue({ ...inputValue, password: '' })
 	}
@@ -47,6 +55,7 @@ const SignUpScreen = () => {
 					placeholder='Email'
 					onChange={e => handleChangeInput(e)}
 					required={true}
+					className={isUserError}
 				/>
 				<input
 					type='password'
@@ -54,7 +63,9 @@ const SignUpScreen = () => {
 					placeholder='Password'
 					onChange={e => handleChangeInput(e)}
 					required={true}
+					className={isUserError}
 				/>
+				<span className={styles.errorMessage}>{errorAuth}</span>
 				<button type='submit' className={styles.button}>
 					{isSignIn ? 'Sign In' : 'Sign Up'}
 				</button>
@@ -63,7 +74,7 @@ const SignUpScreen = () => {
 						{isSignIn ? 'New To Netflix? ' : 'Already Have Account? '}
 					</span>
 					<span className={styles.link} onClick={() => setIsSignIn(!isSignIn)}>
-						{isSignIn ? 'Sign In Now' : 'Sign Up Now'}
+						{isSignIn ? 'Sign Up Now' : 'Sign In Now'}
 					</span>
 				</h4>
 			</form>
