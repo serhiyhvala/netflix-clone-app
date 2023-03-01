@@ -1,21 +1,41 @@
-import { FormEvent } from 'react'
+import { FormEvent, useRef } from 'react'
 
-import './SignUpScreen.scss'
+import { createUser, signInUser } from '../../firebase/signUpForm'
+
+import styles from './sign_up_screen.module.scss'
 
 const SignUpScreen = () => {
-	const signIn = (e: FormEvent<HTMLFormElement>) => {
+	const emailRef = useRef<HTMLInputElement>(null)
+	const passwordRef = useRef<HTMLInputElement>(null)
+	const isEmailAndPasswordExist =
+		emailRef.current !== null && passwordRef.current !== null
+	const signIn = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
+		if (isEmailAndPasswordExist) {
+			await createUser(emailRef.current.value, passwordRef.current.value)
+		}
+	}
+	const signUp = async (e: FormEvent<HTMLInputElement>) => {
+		e.preventDefault()
+		if (isEmailAndPasswordExist) {
+			await signInUser(emailRef.current.value, passwordRef.current.value)
+		}
 	}
 	return (
-		<div className='signUpScreen'>
-			<form onSubmit={signIn}>
+		<div className={styles.content}>
+			<form onSubmit={signIn} className={styles.signInForm}>
 				<h1>Sign In</h1>
-				<input type='email' placeholder='Email' />
-				<input type='password' placeholder='Password' />
-				<button type='submit'>Sign In</button>
+				<input ref={emailRef} type='email' placeholder='Email' />
+				<input ref={passwordRef} type='password' placeholder='Password' />
+				<button type='submit' className={styles.button}>
+					Sign In
+				</button>
 				<h4>
-					<span className='signUpScreen__grayColor'>New To Netflix? </span>
-					<span className='signUpScreen__link'>Sign Up Now</span>
+					<span className={styles.grayColor}>New To Netflix? </span>
+					{/*@ts-ignore*/}
+					<span className={styles.link} onClick={signUp}>
+						Sign Up Now
+					</span>
 				</h4>
 			</form>
 		</div>
