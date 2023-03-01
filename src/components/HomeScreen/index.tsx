@@ -12,11 +12,9 @@ import NetflixOriginalRow from '../NetflixOriginalRow'
 import Row from '../Row'
 import TopRatedRow from '../TopRatedRow'
 
-import './HomeScreen.scss'
-
 const HomeScreen = () => {
 	return (
-		<div className='homeScreen'>
+		<div>
 			<Nav />
 			<Banner />
 			<NetflixOriginalRow title='Netflix Original' isLarge={true} />
