@@ -4,7 +4,7 @@ import { pointForImage } from '../../constants'
 import { IMovie } from '../../services/getAllMovies.types'
 import { useGetNetflixOriginalsQuery } from '../../services/moviesApi'
 
-import './Banner.scss'
+import styles from './banner.module.scss'
 
 const Banner = () => {
 	const { data } = useGetNetflixOriginalsQuery('tv')
@@ -24,26 +24,26 @@ const Banner = () => {
 
 	return (
 		<header
-			className='banner'
+			className={styles.banner}
 			style={{
 				backgroundSize: 'cover',
 				backgroundImage: `url(${pointForImage}/${movie?.backdrop_path})`,
 				backgroundPosition: 'center'
 			}}
 		>
-			<div className='banner__contents'>
-				<h1 className='banner__title'>
+			<div className={styles.content}>
+				<h1 className={styles.title}>
 					{movie?.name || movie?.original_name || movie?.title}
 				</h1>
-				<div className='banner__buttons'>
-					<button className='banner__button'>Play</button>
-					<button className='banner__button'>My List</button>
+				<div className={styles.buttons}>
+					<button className={styles.button}>Play</button>
+					<button className={styles.button}>My List</button>
 				</div>
-				<div className='banner__description'>
+				<div className={styles.description}>
 					{movie?.overview && truncate(movie.overview, 150)}
 				</div>
 			</div>
-			<div className='banner__fadeBottom'></div>
+			<div className={styles.fadeBottom}></div>
 		</header>
 	)
 }
