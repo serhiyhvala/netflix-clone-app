@@ -8,11 +8,13 @@ export type isLoginUserData = {
 export type InitialStateType = {
 	isLogin: boolean
 	isLoginUserData: isLoginUserData
+	userEmail: string
 }
 
 const initialState: InitialStateType = {
 	isLogin: false,
-	isLoginUserData: { email: '', uid: '' }
+	isLoginUserData: { email: '', uid: '' },
+	userEmail: ''
 }
 
 export const userSlice = createSlice({
@@ -32,9 +34,12 @@ export const userSlice = createSlice({
 		},
 		logoutUser: state => {
 			state.isLogin = false
+		},
+		setUserEmail: (state: InitialStateType, action: PayloadAction<string>) => {
+			state.userEmail = action.payload
 		}
 	}
 })
 
-export const { loginUser, logoutUser } = userSlice.actions
+export const { loginUser, logoutUser, setUserEmail } = userSlice.actions
 export default userSlice.reducer

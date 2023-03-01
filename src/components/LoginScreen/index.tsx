@@ -1,12 +1,15 @@
 import { useState } from 'react'
 
 import NetflixLogo from '../../assets/NetflixLogo.png'
+import { useAppDispatch } from '../../store/hooks'
+import { setUserEmail } from '../../store/userSlice'
 import SignUpScreen from '../SignUpScreen'
 
 import './LoginScreen.scss'
 
 const LoginScreen = () => {
 	const [signIn, setSignIn] = useState(false)
+	const dispatch = useAppDispatch()
 	return (
 		<div className='loginScreen'>
 			<div className='loginScreen__background'>
@@ -29,7 +32,11 @@ const LoginScreen = () => {
 
 						<div className='loginScreen__input'>
 							<form>
-								<input type='email' placeholder='Email Address' />
+								<input
+									type='email'
+									placeholder='Email Address'
+									onChange={e => dispatch(setUserEmail(e.target.value))}
+								/>
 								<button
 									onClick={() => setSignIn(true)}
 									className='loginScreen__getStarted'
